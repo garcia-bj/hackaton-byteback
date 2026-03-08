@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  VICTIM
+  AUTHORITY
+  ADMIN
+}
+
+enum EvidenceStatus {
+  SEALED
+  VERIFIED
+  COMPROMISED
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String
+  fullName     String
+  role         Role       @default(VICTIM)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  evidences    Evidence[]
+}
+
+model Evidence {
+  id           String         @id @default(uuid())
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String
+  fileUrl      String
+  fileType     String
+  title        String?        @default("Evidencia Multimedia")
+  sha256Hash   String         @unique
+  ipAddress    String?
+  userAgent    String?
+  status       EvidenceStatus @default(SEALED)
+  timestampCert DateTime      @default(now())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model HelpCenter {
+  id        String   @id @default(uuid())
+  name      String
+  address   String
+  latitude  Float
+  longitude Float
+  phone     String?
+  createdAt DateTime @default(now())
+}
