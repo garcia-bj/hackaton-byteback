@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-navy-900: #f1f5f9;
+  /* Retained as alias for slate-100 */
+  --color-navy-800: #ffffff;
+  --color-navy-700: #e2e8f0;
+  --color-teal-500: #0d9488;
+  --color-cyan-400: #0f766e;
+
+  --color-background: #f1f5f9;
+  --color-foreground: #0f172a;
+}
+
+@layer base {
+  :root {
+    --background: #f1f5f9;
+    --foreground: #0f172a;
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
+
+/* Animations equivalent */
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+}
